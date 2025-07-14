@@ -119,14 +119,14 @@ const logoutUser = asyncHandler(async (req, res) => {
     // Ensure req.user is available (e.g., from auth middleware)
     if (!req.user?._id) {
         throw new ApiError(401, "Unauthorized: No user context")
-    }
-
+    }   
+    // console.log(`Logout attempt: ${req.user.email}`)
     await User.findByIdAndUpdate(
         req.user._id,
         {
             $unset: { 
-                accessToken: "",
-                refreshToken: "" 
+                accessToken: undefined,
+                refreshToken: undefined
             }
         },
         {
